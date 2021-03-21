@@ -177,7 +177,7 @@ public class Player : MonoBehaviour
 		aimingGaol.gameObject.SetActive(false);
 		lrPath.gameObject.SetActive(false);
 		lrPath.positionCount = 0;
-		currentPlaneNormal = 
+		currentPlaneNormal = Vector3.zero;
 
 	}
 }
