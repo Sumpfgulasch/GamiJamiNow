@@ -20,6 +20,11 @@
 
 /[Uu]ser[Ss]ettings/
 
+# editor preferences
+# vs code
+.vscode
+# vim temp files
+.tmp
 
 
 # MemoryCaptures can get excessive in size.
