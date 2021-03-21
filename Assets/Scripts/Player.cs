@@ -56,11 +56,11 @@ public class Player : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0)) // when you click
 			{
-                if(currentAim?.PreviouslyHit != true) 
-                {
-                    // Game over?
-                    return;
-                }
+				if (currentAim?.PreviouslyHit != true)
+				{
+					// Game over?
+					return;
+				}
 
 
 				// if player is not in game, spawn
@@ -75,16 +75,35 @@ public class Player : MonoBehaviour
 
 		if (state == State.isAiming)
 		{
+			Vector2 aimingDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - playerRepresentation.transform.position;
+
+			// check the angle between the players plane and the mouse cursor
+			if (currentPlaneNormal != Vector3.zero) // will be the case before the fist move
+			{
+				angle = Vector3.SignedAngle(currentPlaneNormal, aimingDirection, Vector3.forward);
+			}
+
+			// if the angle would lie outside the 180 degrees spectrum then adjust aiming direction
+			// (i.e take the direction of the normal and rotatet it to limits)
+			if (angle < -90)
+				aimingDirection = Quaternion.Euler(0, 0, -90f) * currentPlaneNormal;
+			
+			else if(angle > 90)
+				aimingDirection = Quaternion.Euler(0, 0, 90f) * currentPlaneNormal;
+			
+
 			// constantly perform a raycast to show aiming gizmo
 			RaycastHit2D hit = Physics2D.Raycast(
 				playerRepresentation.transform.position,
-				Camera.main.ScreenToWorldPoint(Input.mousePosition) - playerRepresentation.transform.position);
+				aimingDirection
+				);
 
 			//if hit
 			if (hit.collider != null)
 			{
-                this.currentAim = GetComponent<Collider>().gameObject.GetComponent<EdgeStateMachine>();
+				// this.currentAim = GetComponent<Collider>().gameObject.GetComponent<EdgeStateMachine>();
 
+				// check the angle between the 
 				// activate the aiming circle and put int on the hit place
 				if (!aimingGaol.activeSelf) aimingGaol.SetActive(true);
 				aimingGaol.transform.position = hit.point;
@@ -94,10 +113,7 @@ public class Player : MonoBehaviour
 				lrAiming.SetPosition(0, playerRepresentation.transform.position);
 				lrAiming.SetPosition(1, hit.point);
 
-				if(currentPlaneNormal != Vector3.zero) // will be the case before the fist move
-				{
 
-				}
 
 				//Debug.DrawLine(hit.point, hit.point + (hit.normal * 10), Color.magenta, 1);
 				// when the player clicks LMB send him in that direction
