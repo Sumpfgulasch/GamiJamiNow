@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	public static Player instance;
 	//evants
 	public System.Action<GameObject, Vector2> OnLosschiessen; 
 	public System.Action<GameObject, Vector2> OnTreffen;
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
+		instance = this;
 		Reset();
 	}
 
@@ -56,13 +58,6 @@ public class Player : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0)) // when you click
 			{
-				if (currentAim?.PreviouslyHit != true)
-				{
-					// Game over?
-					return;
-				}
-
-
 				// if player is not in game, spawn
 				SpawnPlayer(Camera.main.ScreenToWorldPoint(Input.mousePosition)); // spawn player at the location of click
 				GameManager.Instance.playerInGame = true; // tell the Game manager that from now on the player is in game
@@ -101,7 +96,7 @@ public class Player : MonoBehaviour
 			//if hit
 			if (hit.collider != null)
 			{
-				// this.currentAim = GetComponent<Collider>().gameObject.GetComponent<EdgeStateMachine>();
+                this.currentAim = hit.collider.gameObject.GetComponent<EdgeStateMachine>();
 
 				// check the angle between the 
 				// activate the aiming circle and put int on the hit place
@@ -120,6 +115,12 @@ public class Player : MonoBehaviour
 
 				if (Input.GetMouseButtonDown(0))
 				{
+                    if(currentAim?.PreviouslyHit == true)
+                    {
+                        print("already hit here!!1");
+                        return;
+                    }
+
 					SetTarget(hit);
 					currentPlaneNormal = hit.normal;
 					SpawnNewPathPoint(playerRepresentation.transform.position);
