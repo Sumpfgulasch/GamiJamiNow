@@ -7,7 +7,6 @@ public class EdgeStateMachine : MonoBehaviour
     public bool PreviouslyHit{get; private set;} = false;
 
     public void SetHit(){
-        print("I have been hit");
         this.PreviouslyHit = true;
     }
 

@@ -53,13 +53,6 @@ public class Player : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0)) // when you click
 			{
-                if(currentAim?.PreviouslyHit != true) 
-                {
-                    // Game over?
-                    return;
-                }
-
-
 				// if player is not in game, spawn
 				SpawnPlayer(Camera.main.ScreenToWorldPoint(Input.mousePosition)); // spawn player at the location of click
 				GameManager.Instance.playerInGame = true; // tell the Game manager that from now on the player is in game
@@ -80,7 +73,7 @@ public class Player : MonoBehaviour
 			//if hit
 			if (hit.collider != null)
 			{
-                this.currentAim = GetComponent<Collider>().gameObject.GetComponent<EdgeStateMachine>();
+                this.currentAim = hit.collider.gameObject.GetComponent<EdgeStateMachine>();
 
 				// activate the aiming circle and put int on the hit place
 				if (!aimingGaol.activeSelf) aimingGaol.SetActive(true);
@@ -95,7 +88,13 @@ public class Player : MonoBehaviour
 
 				if (Input.GetMouseButtonDown(0))
 				{
-					SetTarget(hit.point);
+                    if(currentAim?.PreviouslyHit == true)
+                    {
+                        print("already hit here!!1");
+                        return;
+                    }
+
+                    SetTarget(hit.point);
 					SpawnNewPathPoint(playerRepresentation.transform.position);
 					ChangeStateTo(State.isTraveling);
 					OnLosschiessen?.Invoke();
