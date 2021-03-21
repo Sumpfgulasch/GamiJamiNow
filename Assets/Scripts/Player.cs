@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 	[SerializeField] private LineRenderer lrPath;
 	[SerializeField] private Vector3 currentTarget;
 	[SerializeField] private float travellingSpeed;
+    private EdgeStateMachine currentAim = null;
 
 	//limiting movement to 180 degrees
 	public Vector3 currentPlaneNormal;
@@ -55,6 +56,13 @@ public class Player : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0)) // when you click
 			{
+                if(currentAim?.PreviouslyHit != true) 
+                {
+                    // Game over?
+                    return;
+                }
+
+
 				// if player is not in game, spawn
 				SpawnPlayer(Camera.main.ScreenToWorldPoint(Input.mousePosition)); // spawn player at the location of click
 				GameManager.Instance.playerInGame = true; // tell the Game manager that from now on the player is in game
@@ -75,6 +83,8 @@ public class Player : MonoBehaviour
 			//if hit
 			if (hit.collider != null)
 			{
+                this.currentAim = GetComponent<Collider>().gameObject.GetComponent<EdgeStateMachine>();
+
 				// activate the aiming circle and put int on the hit place
 				if (!aimingGaol.activeSelf) aimingGaol.SetActive(true);
 				aimingGaol.transform.position = hit.point;
@@ -104,8 +114,8 @@ public class Player : MonoBehaviour
 			}
 
 			else // if raycast hits nothing (which should never happen)
-
 			{   // deactivate the line renderer and the image
+                this.currentAim = null;
 				if (lrAiming.gameObject.activeSelf) lrAiming.gameObject.SetActive(false);
 				if (aimingGaol.activeSelf) aimingGaol.SetActive(false);
 			}
@@ -122,6 +132,7 @@ public class Player : MonoBehaviour
 			{
 				ChangeStateTo(State.isAiming);
 				OnTreffen?.Invoke(lastHitGO, lastHitPosition);
+                currentAim.SetHit();
 			}
 		}
 
