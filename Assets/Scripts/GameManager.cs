@@ -24,6 +24,12 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
+		foreach (var gob in FindObjectsOfType<GameObject>().Where(o => o.name.StartsWith("Figure")))
+		{
+			// hack that works with kalas dummy objects
+			gob.AddComponent<EdgeStateMachine>();
+		}
+
 		CreateEdges("InnerEdge", innerVertices);
 		CreateEdges("OuterEdge", outerVertices);
 	}
