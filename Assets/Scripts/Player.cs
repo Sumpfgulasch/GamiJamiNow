@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	public System.Action OnLosschieﬂen;
+	public System.Action OnLosschiessen; 
 	public System.Action OnTreffen;
 
 	public GameObject playerRepresentation;
