@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
 	public bool playerInGame;
 	public static GameManager Instance;
 
+	public List<GameObject> vertices;
+	public GameObject edge;
+	public Transform edgeContainer;
+	// public List<EdgeStateMachine> edges; // TO DO: richtiger script-name von till
+
 	public void Awake()
 	{
 		Instance = this;
@@ -17,7 +22,17 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        
+
+		// Create all EdgeObjects that contain the colliders and states
+        for (int i=0; i<vertices.Count; i++)
+        {
+			var obj = Instantiate(edge, edgeContainer);
+			var edgeCollider = obj.GetComponent<EdgeCollider2D>();
+			edgeCollider.points = new Vector2[2];
+			edgeCollider.points[0] = vertices[i].transform.position;
+			edgeCollider.points[1] = vertices[(i+1)%vertices.Count].transform.position;
+			// edges.Add(obj.GetComponent<EdgeStateMachine>(); // to do: richtiger state machine name
+		}
     }
 
     // Update is called once per frame
