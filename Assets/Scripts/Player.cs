@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+	public static Player instance;
 	//evants
 	public System.Action<GameObject, Vector2> OnLosschiessen; 
 	public System.Action<GameObject, Vector2> OnTreffen;
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
+		instance = this;
 		Reset();
 	}
 
