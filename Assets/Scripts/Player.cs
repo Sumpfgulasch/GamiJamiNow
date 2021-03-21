@@ -59,7 +59,6 @@ public class Player : MonoBehaviour
                     return;
                 }
 
-                currentAim.SetHit();
 
 				// if player is not in game, spawn
 				SpawnPlayer(Camera.main.ScreenToWorldPoint(Input.mousePosition)); // spawn player at the location of click
@@ -82,6 +81,7 @@ public class Player : MonoBehaviour
 			if (hit.collider != null)
 			{
                 this.currentAim = GetComponent<Collider>().gameObject.GetComponent<EdgeStateMachine>();
+
 				// activate the aiming circle and put int on the hit place
 				if (!aimingGaol.activeSelf) aimingGaol.SetActive(true);
 				aimingGaol.transform.position = hit.point;
@@ -103,8 +103,8 @@ public class Player : MonoBehaviour
 			}
 
 			else // if raycast hits nothing (which should never happen)
-
 			{   // deactivate the line renderer and the image
+                this.currentAim = null;
 				if (lrAiming.gameObject.activeSelf) lrAiming.gameObject.SetActive(false);
 				if (aimingGaol.activeSelf) aimingGaol.SetActive(false);
 			}
@@ -113,7 +113,6 @@ public class Player : MonoBehaviour
 
 		else if(state == State.isTraveling)
 		{
-            this.currentAim = null;
 			// move the player
 			Vector3 newPosition = Vector3.MoveTowards(playerRepresentation.transform.position, currentTarget, travellingSpeed * Time.deltaTime);
 			playerRepresentation.transform.position = newPosition;
@@ -122,6 +121,7 @@ public class Player : MonoBehaviour
 			if (Vector3.Distance(playerRepresentation.transform.position,currentTarget) < 0.1f) 
 			{
 				ChangeStateTo(State.isAiming);
+                currentAim.SetHit();
 				OnTreffen?.Invoke();
 			}
 		}

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class EdgeStateMachine : MonoBehaviour
 { 
-    public EdgeStateMachine()
-    {
-        print("I was created.");
-    }
-
     public bool PreviouslyHit{get; private set;} = false;
 
     public void SetHit(){

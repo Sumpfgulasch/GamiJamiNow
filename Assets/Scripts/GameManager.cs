@@ -23,6 +23,12 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
+		foreach(var gob in FindObjectsOfType<GameObject>().Where(o => o.name.StartsWith("Figure")))
+		{
+			// hack that works with kalas dummy objects
+			gob.AddComponent<EdgeStateMachine>();
+		}
+
 		// Create all EdgeObjects that contain the colliders and states
         for (int i=0; i<vertices.Count; i++)
         {
