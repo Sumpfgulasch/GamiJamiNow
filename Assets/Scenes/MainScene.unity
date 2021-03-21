@@ -325,15 +325,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2808398592824239095, guid: 019d9ba87c926f9489c79a4deb3b0d28, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.3417113
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2808398592824239095, guid: 019d9ba87c926f9489c79a4deb3b0d28, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.52205145
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2808398592824239095, guid: 019d9ba87c926f9489c79a4deb3b0d28, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.96847
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2808398592824239095, guid: 019d9ba87c926f9489c79a4deb3b0d28, type: 3}
       propertyPath: m_LocalRotation.w
@@ -516,6 +516,10 @@ PrefabInstance:
     - target: {fileID: 7611419998791250461, guid: 87489353d53b0f640adddc0dbe58ca0e, type: 3}
       propertyPath: m_Name
       value: Polygons
+      objectReference: {fileID: 0}
+    - target: {fileID: 7611419998791250461, guid: 87489353d53b0f640adddc0dbe58ca0e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87489353d53b0f640adddc0dbe58ca0e, type: 3}
