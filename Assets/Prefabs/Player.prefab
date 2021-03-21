@@ -507,6 +507,9 @@ MonoBehaviour:
   travellingSpeed: 5
   currentPlaneNormal: {x: 0, y: 0, z: 0}
   angle: 0
+  polygons:
+  - {fileID: 0}
+  - {fileID: 0}
   state: 0
 --- !u!114 &8534215590816038679
 MonoBehaviour:

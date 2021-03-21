@@ -28,6 +28,10 @@ public class Player : MonoBehaviour
 	public Vector3 currentPlaneNormal;
 	public float angle; 
 
+	//
+	public GameObject[] polygons;
+	Material[] polygonsMats;
+
 	public enum State
 	{
 		none,
@@ -46,12 +50,22 @@ public class Player : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-        
+		polygonsMats = new Material[polygons.Length];
+        for (int i = 0; i < polygons.Length; i++)
+		{
+			polygonsMats[i] = polygons[i].GetComponent<MeshRenderer>().material;
+		}
     }
 
     // Update is called once per frame
     void Update()
 	{
+		for (int i = 0; i < polygonsMats.Length; i++)
+		{
+			polygonsMats[i].SetVector("_GlowInputCord", new Vector3(-playerRepresentation.transform.position.x, -playerRepresentation.transform.position.y, 0f));
+		}
+
+
 		//  wire input
 
 		if (!GameManager.Instance.playerInGame) // if player is not in game
