@@ -5,8 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 	//evants
-	public System.Action OnLosschiessen; 
-	public System.Action OnTreffen;
+	public System.Action<GameObject, Vector2> OnLosschiessen; 
+	public System.Action<GameObject, Vector2> OnTreffen;
 
 	// genereal
 	[SerializeField] private GameObject playerRepresentation;
@@ -14,12 +14,18 @@ public class Player : MonoBehaviour
 	// aiming
 	[SerializeField] private LineRenderer lrAiming;
 	[SerializeField] private GameObject aimingGaol;
+	private GameObject lastHitGO;
+	private Vector3 lastHitPosition; 
 
 	// travelling
 	[SerializeField] private LineRenderer lrPath;
 	[SerializeField] private Vector3 currentTarget;
 	[SerializeField] private float travellingSpeed;
     private EdgeStateMachine currentAim = null;
+
+	//limiting movement to 180 degrees
+	public Vector3 currentPlaneNormal;
+	public float angle; 
 
 	public enum State
 	{
@@ -32,10 +38,7 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
-		playerRepresentation.SetActive(false);
-		lrAiming.gameObject.SetActive(false);
-		aimingGaol.gameObject.SetActive(false);
-		lrPath.gameObject.SetActive(false);
+		Reset();
 	}
 
 	// Start is called before the first frame update
@@ -84,6 +87,12 @@ public class Player : MonoBehaviour
 				lrAiming.SetPosition(0, playerRepresentation.transform.position);
 				lrAiming.SetPosition(1, hit.point);
 
+				if(currentPlaneNormal != Vector3.zero) // will be the case before the fist move
+				{
+
+				}
+
+				//Debug.DrawLine(hit.point, hit.point + (hit.normal * 10), Color.magenta, 1);
 				// when the player clicks LMB send him in that direction
 
 				if (Input.GetMouseButtonDown(0))
@@ -94,10 +103,12 @@ public class Player : MonoBehaviour
                         return;
                     }
 
-                    SetTarget(hit.point);
+					SetTarget(hit);
+					currentPlaneNormal = hit.normal;
 					SpawnNewPathPoint(playerRepresentation.transform.position);
 					ChangeStateTo(State.isTraveling);
-					OnLosschiessen?.Invoke();
+
+					OnLosschiessen?.Invoke(lastHitGO, lastHitPosition);
 				}
 			}
 
@@ -107,7 +118,6 @@ public class Player : MonoBehaviour
 				if (lrAiming.gameObject.activeSelf) lrAiming.gameObject.SetActive(false);
 				if (aimingGaol.activeSelf) aimingGaol.SetActive(false);
 			}
-
 		}
 
 		else if(state == State.isTraveling)
@@ -120,8 +130,8 @@ public class Player : MonoBehaviour
 			if (Vector3.Distance(playerRepresentation.transform.position,currentTarget) < 0.1f) 
 			{
 				ChangeStateTo(State.isAiming);
+				OnTreffen?.Invoke(lastHitGO, lastHitPosition);
                 currentAim.SetHit();
-				OnTreffen?.Invoke();
 			}
 		}
 
@@ -139,9 +149,12 @@ public class Player : MonoBehaviour
 		this.state = state;
 	}
 
-	public void SetTarget( Vector3 targetPosition)
+	public void SetTarget(RaycastHit2D hit)
 	{
-		currentTarget = targetPosition;
+		currentTarget = hit.point;
+		lastHitPosition = hit.point;
+		lastHitGO = hit.collider.gameObject;
+
 	}
 
 	public void SpawnNewPathPoint(Vector3 position)
@@ -154,5 +167,16 @@ public class Player : MonoBehaviour
 	public void SetEndOfTrail(Vector3 position)
 	{
 		lrPath.SetPosition(lrPath.positionCount -1, position);
+	}
+
+	public void Reset()
+	{
+		playerRepresentation.SetActive(false);
+		lrAiming.gameObject.SetActive(false);
+		aimingGaol.gameObject.SetActive(false);
+		lrPath.gameObject.SetActive(false);
+		lrPath.positionCount = 0;
+		currentPlaneNormal = Vector3.zero;
+
 	}
 }
