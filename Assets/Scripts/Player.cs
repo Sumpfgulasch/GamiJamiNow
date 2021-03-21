@@ -180,6 +180,10 @@ public class Player : MonoBehaviour
 		if (!lrPath.gameObject.activeSelf) lrPath.gameObject.SetActive(true);
 		lrPath.positionCount += 1;
 		SetEndOfTrail(position);
+		lrPath.positionCount += 1;
+		SetEndOfTrail(position);
+		lrPath.positionCount += 1;
+		SetEndOfTrail(position);
 	}
 
 	public void SetEndOfTrail(Vector3 position)
