@@ -18,7 +18,9 @@ public class GameManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		FindObjectsOfType<GameObject>().Where(o => o.name.StartsWith("Figure")).Select(o => o.AddComponent<EdgeStateMachine>());
+		foreach(var obj in FindObjectsOfType<GameObject>().Where(o => o.name.StartsWith("Figure")))
+			obj.AddComponent<EdgeStateMachine>();
+		}
     }
 
     // Update is called once per frame

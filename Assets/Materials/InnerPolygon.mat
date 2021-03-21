@@ -21,18 +21,25 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: InnerPolygon
-  m_Shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 62680e2c0e5abe34dbb8ec8ded48c0f7, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_122c769c54b140ffbf31f3f5da0d4606:
+        m_Texture: {fileID: 2800000, guid: 73701ff27b2dcac46b9c34940b0960ae, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_c6bc061bf864486888e18f797bc07915:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -90,6 +97,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_27a45c39aeee4eb0a811c985b58151cf: 1
+    - Vector1_2cd74edbf10f46b9817b3af4f1c9dba8: 0
+    - Vector1_81efd1b2cf704a60a5408b902571fd5a: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BlendOp: 0
@@ -133,6 +143,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_647f5e77a415409f9d3ac06cc7c7ffc4: {r: 0, g: 0.8237238, b: 1, a: 0}
     - _BaseColor: {r: 0.35656217, g: 0.5507738, b: 0.9528302, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: 0, b: 0, a: 0}
