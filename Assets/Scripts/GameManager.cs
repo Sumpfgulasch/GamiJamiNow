@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
 		foreach(var obj in FindObjectsOfType<GameObject>().Where(o => o.name.StartsWith("Figure")))
+		{
 			obj.AddComponent<EdgeStateMachine>();
 		}
     }
@@ -26,7 +27,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
 	public void StartLevel() 

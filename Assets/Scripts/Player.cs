@@ -61,7 +61,6 @@ public class Player : MonoBehaviour
 
                 currentAim.SetHit();
 
-
 				// if player is not in game, spawn
 				SpawnPlayer(Camera.main.ScreenToWorldPoint(Input.mousePosition)); // spawn player at the location of click
 				GameManager.Instance.playerInGame = true; // tell the Game manager that from now on the player is in game
