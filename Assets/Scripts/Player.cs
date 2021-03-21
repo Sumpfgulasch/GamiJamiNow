@@ -41,7 +41,29 @@ public class Player : MonoBehaviour
 		else
 		{
 			// constantly raycast in the direction of mouse
+			RaycastHit2D hit = Physics2D.Raycast(
+				playerRepresentation.transform.position,
+				Camera.main.ScreenToWorldPoint(Input.mousePosition) - playerRepresentation.transform.position);
 
+			//if hit
+			if(hit.collider != null)
+			{
+				// activate the aiming circle and put int on the hit place
+				if(!aimingGaol.activeSelf) aimingGaol.SetActive(true);
+				aimingGaol.transform.position = hit.point;
+
+				// activate line renderer and put it in position
+				if (!lrAiming.gameObject.activeSelf) lrAiming.gameObject.SetActive(true);
+				lrAiming.SetPosition(0, playerRepresentation.transform.position);
+				lrAiming.SetPosition(1, hit.point);
+
+			}
+
+			else
+			{
+				if(lrAiming.gameObject.activeSelf) lrAiming.gameObject.SetActive(false);
+				if (aimingGaol.activeSelf) aimingGaol.SetActive(false);
+			}
 		}
 		
 	}
